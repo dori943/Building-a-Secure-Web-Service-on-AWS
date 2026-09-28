@@ -4,16 +4,24 @@
 ## 1. 아키텍처
 `docs/architecture.png` 참고. VPC → Public Subnet → IGW → Route Table → EC2(Nginx) 흐름.
 
-(다이어그램은 draw.io / diagrams.net 또는 AWS 공식 아이콘셋으로 직접 그려서
-VPC, Subnet, Internet Gateway, EC2, Security Group과 외부→서비스 트래픽 화살표를 표시할 것)
 
 ## 2. 실행 방법
 ```bash
-cd terraform
-terraform init
-terraform apply \
-  -var="key_name=<내 키페어 이름>" \
-  -var="my_ip_cidr=$(curl -s ifconfig.me)/32"
+cd C:\Users\user\Building-a-Secure-Web-Service-on-AWS\terraform
+
+# 내 공인 IP 확인
+(Invoke-RestMethod https://checkip.amazonaws.com).Trim()
+
+# 예시 파일 복사
+Copy-Item terraform.tfvars.example terraform.tfvars
+notepad terraform.tfvars
+```
+
+```bash
+terraform init        # 필요한 AWS 플러그인 다운로드 (처음 1회)
+terraform validate    # 코드 문법 검사
+terraform plan        # 무엇을 만들지 미리보기 (아직 아무것도 안 만들어짐)
+terraform apply       # 실제 생성. 확인 질문에 yes 입력
 ```
 apply 완료 후 출력되는 `instance_public_ip` 를 아래 접속 검증에 사용.
 

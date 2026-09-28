@@ -23,6 +23,3 @@ terraform destroy
 ```
 destroy 완료 후 `terraform show` 로 남은 상태가 없는지 재확인.
 
-## 정리 완료 근거
-- 정리 완료 일시:
-- 확인 방법 (스크린샷/CLI 출력 등):
