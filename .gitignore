@@ -1,0 +1,18 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+!terraform.tfvars.example
+.terraformrc
+terraform.rc
+
+# SSH 키 (절대 커밋 금지)
+*.pem
+*.key
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
