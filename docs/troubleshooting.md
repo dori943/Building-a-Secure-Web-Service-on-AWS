@@ -1,6 +1,9 @@
 # 트러블슈팅 보고서
 
 ## 사례 1: terraform apply 중 VPC 생성이 UnauthorizedOperation으로 실패
+```bash
+Error: creating EC2 VPC: modifying EnableDnsHostnames: waiting for completion: operation error EC2: DescribeVpcAttribute, https response error StatusCode: 403, ...
+```
 
 - **증상**: `terraform apply` 시 `aws_vpc.main` 생성 도중 403 에러로 중단됨.
   `not authorized to perform: ec2:DescribeVpcAttribute`
@@ -19,6 +22,9 @@
   읽기 전용 Describe*는 허용하고 생성/삭제 액션만 명시적으로 제한하는 방식으로 정책을 설계한다.
 
 ## 사례 2: Security Group 생성 실패 (InvalidParameterValue)
+```bash
+Error: creating Security Group (cloud-mission-web-sg): operation error EC2: CreateSecurityGroup, https response error StatusCode: 400, RequestID:~, api error InvalidParameterValue: Value (HTTP 전체 허용, SSH는 내 IP만 허용 (최소권한)) for parameter GroupDescription is invalid. Character sets beyond ASCII are not supported.
+```
 
 - **증상**: apply 중 VPC/서브넷/IGW는 생성됐지만 aws_security_group.web에서 400 에러.
   `Character sets beyond ASCII are not supported`
