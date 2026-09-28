@@ -18,11 +18,11 @@ terraform apply \
 apply 완료 후 출력되는 `instance_public_ip` 를 아래 접속 검증에 사용.
 
 ## 3. 외부 접속 검증 (택 1)
-- [ ] 방식 A: 브라우저로 `http://<퍼블릭IP>` 접속 → 정상 페이지 표시
-- [ ] 방식 B: `curl -i http://<퍼블릭IP>/health` → `200 OK`, 응답 본문 `OK`
+- [ ] 방식 A: 브라우저로 `http://<여기에 실제 퍼블릭 IP 기재>/health` 접속 → 정상 페이지 표시
+- [x] 방식 B: `curl -i http://<여기에 실제 퍼블릭 IP 기재>/health` → `200 OK`, 응답 본문 `OK`
 
-선택한 방식: **(A 또는 B 기재)**
-접속 정보: `http://<여기에 실제 퍼블릭 IP 기재>`
+선택한 방식: **B**
+접속 정보: `curl -i http://13.209.84.146/health`
 
 스크린샷: `docs/screenshots/access-proof.png`
 
