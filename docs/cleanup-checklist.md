@@ -23,3 +23,29 @@ terraform destroy
 ```
 destroy 완료 후 `terraform show` 로 남은 상태가 없는지 재확인.
 
+## 정리 확인 명령어
+```bash
+# EC2 인스턴스 (State가 terminated 또는 결과 없음)
+aws ec2 describe-instances --region ap-northeast-2 --query "Reservations[].Instances[].[InstanceId,State.Name]" --output table
+
+# EBS 볼륨 (결과 없어야 함)
+aws ec2 describe-volumes --region ap-northeast-2 --query "Volumes[].[VolumeId,State,Size]" --output table
+
+# Elastic IP (결과 없어야 함)
+aws ec2 describe-addresses --region ap-northeast-2
+
+# NAT Gateway (결과 없어야 함)
+aws ec2 describe-nat-gateways --region ap-northeast-2 --query "NatGateways[].[NatGatewayId,State]" --output table
+
+# VPC (기본 VPC 하나만 남아야 함: IsDefault가 True인 것)
+aws ec2 describe-vpcs --region ap-northeast-2 --query "Vpcs[].[VpcId,IsDefault]" --output table
+
+# 서브넷, 보안 그룹, 라우트 테이블, IGW 중 cloud-mission 이름이 남아 있는지
+aws ec2 describe-subnets --region ap-northeast-2 --filters "Name=tag:Name,Values=cloud-mission-*" --query "Subnets[].SubnetId"
+aws ec2 describe-security-groups --region ap-northeast-2 --filters "Name=group-name,Values=cloud-mission-*" --query "SecurityGroups[].GroupId"
+aws ec2 describe-route-tables --region ap-northeast-2 --filters "Name=tag:Name,Values=cloud-mission-*" --query "RouteTables[].RouteTableId"
+aws ec2 describe-internet-gateways --region ap-northeast-2 --filters "Name=tag:Name,Values=cloud-mission-*" --query "InternetGateways[].InternetGatewayId"
+
+# 키페어 (cloud-mission-key가 남아 있는지)
+aws ec2 describe-key-pairs --region ap-northeast-2 --query "KeyPairs[].KeyName"
+```
